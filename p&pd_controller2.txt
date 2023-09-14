@@ -1,0 +1,21 @@
+clear all
+close all
+clc
+Gs=zpk([-8],[-3 -6 -10],122)
+GPD=zpk([-8 -55.75],[-3 -6 -10],5.4)
+GPID=zpk([-8 -55.75 -.5],[0 -3 -6 -10],4.63)
+Sp=feedback(Gs,1);
+Spd=feedback(GPD,1);
+Spid=feedback(GPID,1);
+figure(1)
+impulse(Sp)
+hold on
+impulse(Spd)
+hold on
+impulse(Spid)
+figure(2)
+step(Sp)
+hold on
+step(Spd)
+hold on
+step(Spid)

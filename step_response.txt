@@ -1,0 +1,13 @@
+clf 
+numa=100; 
+dena=[1 15 100]; 
+Ta=tf(numa,dena) 
+omegana=sqrt(dena(3)) 
+zetaa=dena(2)/(2*omegana) 
+Ts=4/(zetaa*omegana) 
+Tp=pi/(omegana*sqrt(1-zetaa^2)) 
+Tr=(1.76*zetaa^3 - 0.417*zetaa^2 + 1.039*zetaa + 
+1)/omegana 
+percenta=exp(-zetaa*pi/sqrt(1-zetaa^2))*100 
+step(Ta) 
+title('Step Response')

@@ -1,0 +1,15 @@
+clear all
+close all
+clc
+Gs=zpk([-8],[-3 -6 -10],122)
+GPD=zpk([-8 -55.75],[-3 -6 -10],5.4)
+Sp=feedback(Gs,1)
+Spd=feedback(GPD,1)
+figure(1)
+impulse(Sp,1.5)
+hold on
+impulse(Spd,1.5)
+figure(2)
+step(Sp,1.5)
+hold on
+step(Spd,1.5)

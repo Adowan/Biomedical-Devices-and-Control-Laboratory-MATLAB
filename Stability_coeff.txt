@@ -1,0 +1,41 @@
+numg1=[1 9];deng1=poly([0 -6 -12 -14]);
+'G1(s)='
+G1=tf(numg1,deng1)
+numg2=6*poly([-9 -17]);deng2=poly([-12 -32 -68]);
+'G2(s)='
+G2=tf(numg2,deng2)
+numh1=13;denh1=1;
+'H1(s)='
+H1=tf(numh1,denh1)
+numh2=1;denh2=[1 7];
+'H2(s)='
+H2=tf(numh2,denh2)
+ %Close loop with H1 and form G3
+'G3(s)=G2(s)/(1+G2(s)H1(s))'
+G3=feedback(G2,H1)
+ %Form G4=G1G3
+'G4(s)=G1(s)G3(s)'
+G4=series(G1,G3)
+ %Form Ge=G4/1+G4H2
+'Ge(s)=G4(s)/(1+G4(s)H2(s))'
+Ge=feedback(G4,H2)
+ %Form T(s)=Ge(s)/(1+Ge(s)) to test stability
+'T(s)=Ge(s)/(1+Ge(s))'
+T=feedback(Ge,1)
+'Poles of T(s)'
+pole(T)
+ %Computer response shows that system is stable. Now find error specs.
+Kp=dcgain(Ge)
+'sGe(s)='
+sGe=tf([1 0],1)*Ge;
+'sGe(s)'
+sGe=minreal(sGe)
+Kv=dcgain(sGe)
+'s^2Ge(s)='
+s2Ge=tf([1 0],1)*sGe;
+'s^2Ge(s)'
+s2Ge=minreal(s2Ge)
+Ka=dcgain(s2Ge)
+essstep=100/(1+Kp)
+essramp=100/Kv
+essparabola=200/Ka
